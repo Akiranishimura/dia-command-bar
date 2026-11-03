@@ -108,6 +108,7 @@ final class CommandBarController: NSObject {
             backing: .buffered, defer: false)
         super.init()
         configurePanel()
+        if DemoData.isEnabled { ctx = DemoData.context() }
     }
 
     // MARK: - Show / Hide
@@ -162,6 +163,12 @@ final class CommandBarController: NSObject {
 
     /// タブ一覧・履歴を最新にする（Dia が前面に来たとき＆パネルを開いたとき）
     func refreshState() {
+        if DemoData.isEnabled {
+            let phrases = ctx.searchPhrases
+            ctx = DemoData.context()
+            ctx.searchPhrases = phrases
+            return
+        }
         DiaBridge.fetchState { [weak self] state in
             guard let self, let state else { return }
             self.ctx.tabs = state.tabs
@@ -514,6 +521,7 @@ extension CommandBarController: NSTextFieldDelegate {
         if grew && allowCompletion { applyInlineCompletion() }
         userMovedSelection = false
         rebuildRows()
+        guard !DemoData.isEnabled else { return } // スクリーンショット用: 実際のサジェストは出さない
         let query = text
         suggestClient.fetch(query) { [weak self] q, phrases in
             guard let self, self.isVisible, q == self.userText else { return } // 古い応答は捨てる

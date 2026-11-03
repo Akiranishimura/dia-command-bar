@@ -2,6 +2,18 @@
 
 Dia 用の Arc 風コマンドバー。拡張機能ではなくメニューバー常駐の macOS アプリなので、全スペースで同じように動く。
 
+<img src="docs/images/empty.png" width="640" alt="⌘T で開いた直後。現在のスペースのタブを最近見た順に表示">
+
+| ドメインのインライン補完 | 全スペースのタブ・履歴・検索 |
+|---|---|
+| <img src="docs/images/inline-completion.png" width="400" alt="gi と打つと github.com を補完"> | <img src="docs/images/search.png" width="400" alt="swift で別スペースのタブや履歴も出る"> |
+
+`cl` + Tab で Claude に聞くモード:
+
+<img src="docs/images/ask-claude.png" width="640" alt="Claude に聞くモード">
+
+スクリーンショットはダミーデータで撮影している（`DCB_DEMO=1` で起動するとデモモードになる。下記参照）。
+
 ## 仕組み
 
 - Dia が前面のときだけ ⌘T を Carbon ホットキーとして登録し、他のアプリが前面になったら解除する（アクセシビリティ権限不要）
@@ -29,6 +41,15 @@ ad-hoc 署名なので、再ビルドすると許可を求められ直すこと�
 `SwiftBridging` の二重定義エラーが出る場合は、古い CLT の残骸 `/Library/Developer/CommandLineTools/usr/include/swift/module.modulemap` を削除する。
 
 メニューバーの ⌘ アイコンから「ログイン時に起動」を切り替えられる。
+
+### デモモード（スクリーンショット用）
+
+```sh
+open --env DCB_DEMO=1 build/DiaCommandBar.app
+```
+
+Dia の実際のタブ・履歴の代わりに `DemoData.swift` のダミーデータを使い、Google サジェストも取りに行かない。
+パネルのウィンドウだけを撮るには `screencapture -l <ウィンドウ ID>` を使う。
 
 ## 見た目・位置
 
