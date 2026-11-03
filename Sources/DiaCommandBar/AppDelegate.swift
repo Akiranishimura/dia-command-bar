@@ -17,6 +17,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             name: NSWorkspace.didActivateApplicationNotification, object: nil)
         updateHotKey(frontmost: NSWorkspace.shared.frontmostApplication)
 
+        // scripts/install.sh から --enable-login-item 付きで起動されたらログイン項目に登録する
+        if CommandLine.arguments.contains("--enable-login-item"), SMAppService.mainApp.status != .enabled {
+            do { try SMAppService.mainApp.register() } catch { NSLog("[DiaCommandBar] login item error: \(error)") }
+        }
+
         setUpStatusItem()
     }
 

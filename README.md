@@ -27,7 +27,16 @@ Dia 用の Arc 風コマンドバー。拡張機能ではなくメニューバ�
 AppleScript の `profile` は Dia の「スペース」で、`User Data/Profile N`（Chromium プロファイル）とは 1 対 1 ではない（複数スペースが 1 プロファイルを共有する）。
 対応はどこにも保存されていないので、名前が一致すればそれ、しなければ「そのスペースで開いているタブの URL を最も多く履歴に持つプロファイル」をそのスペースの履歴として使う。
 
-## ビルド・起動
+## インストール
+
+```sh
+./scripts/install.sh
+```
+
+ビルドして `~/Applications/DiaCommandBar.app` に置き、ログイン時に起動するよう登録して起動する。
+ログイン時の起動はメニューバーの ⌘ アイコンからも切り替えられる。
+
+開発中にビルドだけしたいときは:
 
 ```sh
 ./scripts/build-app.sh
@@ -39,8 +48,6 @@ ad-hoc 署名なので、再ビルドすると許可を求められ直すこと�
 
 この環境の Command Line Tools は SwiftPM が壊れているので、`build-app.sh` は `swiftc` を直接呼んでいる。
 `SwiftBridging` の二重定義エラーが出る場合は、古い CLT の残骸 `/Library/Developer/CommandLineTools/usr/include/swift/module.modulemap` を削除する。
-
-メニューバーの ⌘ アイコンから「ログイン時に起動」を切り替えられる。
 
 ### デモモード（スクリーンショット用）
 
@@ -98,3 +105,7 @@ Arc 1.170 のコマンドバーを実測して合わせている。
 
 - ブックマーク（`Bookmarks` JSON）
 - 検索エンジン・AI の追加や並び順の設定
+
+## ライセンス
+
+MIT
